@@ -37,4 +37,6 @@ src/configs/demo_ai4eosc.yaml
 src/configs/huggingface.yaml
 src/configs/ai4eosc.yaml
 
+# Lookups 
+src/utils/generate_lookups/
 
