@@ -31,8 +31,10 @@ ipython_config.py
 # pycache
 __pycache__/
 
-# configs
-configs/demo_huggingface.yaml
-configs/demo_ai4eosc.yaml
-configs/huggingface.yaml
-configs/ai4eosc.yaml
+# Configs
+src/configs/demo_huggingface.yaml
+src/configs/demo_ai4eosc.yaml
+src/configs/huggingface.yaml
+src/configs/ai4eosc.yaml
+
+
