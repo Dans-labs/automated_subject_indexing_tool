@@ -1,2 +1,0 @@
-DOI,Number of Metadata Characters,Number of Matched Terms,Matching Method,Cosine Similarity Threshold,Embedding Method,LLM Model,Runtime (seconds)
-doi:10.17026/dans-xw7-jbnd,234,6,closest,0.8,SBERT,openai/gpt-oss-120b,13.929672645999972

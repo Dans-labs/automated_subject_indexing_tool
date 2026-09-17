@@ -16,8 +16,7 @@ def run(config, doi):
 
     logging.info("> Fetching metadata from DOI...")
 
-    #doi = config['doi_to_md']['doi']
-    base_url = config["doi_to_md"]["base_url"]
+    base_url = config["extract_metadata"]["base_url"]
 
     logging.info(f"Using DOI: {doi}")
 
@@ -27,7 +26,6 @@ def run(config, doi):
     metadata_url = f"{base_url}{doi_encoded}"
     #logging.info(f"Metadata URL: {metadata_url}")
 
-    #logging.info("Requesting metadata from API...")
 
     # Get metadata from API
     try:  
@@ -96,3 +94,5 @@ def run(config, doi):
 
     logging.info("> Metadata fetched successfully.")
     return metadata_output
+
+

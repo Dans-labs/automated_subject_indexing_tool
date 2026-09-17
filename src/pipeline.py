@@ -6,11 +6,13 @@ import logging
 
 import time
 
+from src.tasks import extract_metadata
+
 start = time.perf_counter()
 
 
 #from .tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms
-from src.tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
+from src.tasks import generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
 # Configure logging 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -25,13 +27,14 @@ def load_config(config_path: str) -> dict:
 
 def main(): 
     # Parse optional CLI argument for config file
-    parser = argparse.ArgumentParser(description="NLP Pipeline Tool")
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config", 
         type=str, 
-        default="src/configs/demo.yaml", 
+        default="src/configs/demo_ai4eosc.yaml", 
         help="Path to the configuration YAML file."
     )
+    # Optional CLI argument for DOI 
     parser.add_argument(
         "--doi",
         type=str,
@@ -48,7 +51,7 @@ def main():
     if args.doi:
         doi = args.doi
     else: 
-        doi = config["doi_to_md"]["doi"]
+        doi = config["input"]["doi"]
         
 
 
@@ -56,7 +59,7 @@ def main():
     logging.info("> Starting pipeline...")
 
     # Task 1: DOI to Metadata
-    metadata_output = doi_to_md.run(config, doi)
+    metadata_output = extract_metadata.run(config, doi)
     if metadata_output:
         print("\n=== METADATA ===")
         print(metadata_output)
@@ -87,7 +90,7 @@ def main():
             logging.info(f"> Keyword embeddings successfully generated!")
             print("\n=== KEYWORD EMBEDDINGS ===")
             for i, emb in enumerate(keyword_embeddings):
-                print(f"Keyword: {keywords[i]} | Embedding shape: {emb.shape}")
+                print(f"Keyword: {keywords[i]} | Embedding length: {len(emb)}")
             print("==========================\n")
         else:
             logging.warning("No keyword embeddings were generated.")
@@ -105,15 +108,9 @@ def main():
     # Task 5: Format output
     if metadata_output and keywords and closest_matches:
         metadata_length = len(metadata_output)
-        formatted_output = format_output.run(config, keywords, closest_matches, cosines, metadata_length, metadata_output, doi, elapsed)
-        
+        format_output.run(config, keywords, closest_matches, cosines, metadata_length, metadata_output, doi, elapsed)
 
-        #logging.info("Formatted Output:")
-        logging.info(formatted_output)
-
-
-
-    logging.info("> Pipeline completed.")
+    logging.info("> Pipeline completed")
     #logging.info("===================================")
     print("\n")
 

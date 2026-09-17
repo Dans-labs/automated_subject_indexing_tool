@@ -1,65 +1,68 @@
 """
 Input: a list of keywords
 
-Output: embeddding representations of the keywords
+Output: embeddding representations of the keywords (as lists)
 
 """
 
 
 # Import libraries
 import logging
-
-
+from openai import OpenAI
 
 
 def run(config, keywords):
 
     logging.info("Converting keywords to embeddings...")
 
-    method = config["embeddings"]["method"]
+    platform = config["model"]["platform"]
+    model = config["model"]["embeddings_model"]
+    api_url = config["model"]["api_url"]
+    api_key = config["model"]["api_key"]
     
 
     keywords = [kw.lower() for kw in keywords]
 
-    if method == "fasttext":
-        import fasttext
-        from utils.helpers import get_fasttext_vec
-
-        model_path = config["embeddings"]["model_path"]
         
-        logging.info(f"Using FastText model at: {model_path}")
-        # Load FastText model
-        #fasttext.util.download_model('en', if_exists='ignore')
-        ft = fasttext.load_model(model_path)
+    if platform == "ai4eosc": 
 
+        def get_embeddings(keyword):
 
-        # Get embeddings
-        keyword_embeddings = [ft.get_word_vector(kw) for kw in keywords]
+            client = OpenAI(
+                base_url = api_url,
+                api_key = api_key
+            )
 
-        return keyword_embeddings
+            response = client.embeddings.create(
+                input = keyword,
+                model = model
+                )
+            
+            return response.data[0].embedding
+
+        embeddings = [get_embeddings(kw) for kw in keywords]
+        return embeddings
     
-    if method == "SBERT":
+
+
+    if platform == "huggingface":
         from sentence_transformers import SentenceTransformer
         import numpy as np
 
-        logging.info(f"Using SBERT model: {config['embeddings']['sbert_model']}")
-        sbert_model = SentenceTransformer(config['embeddings']['sbert_model'])
+        model = SentenceTransformer(config['model']['embeddings_model'])
 
-        def get_sbert_embedding(text: str) -> np.ndarray:
+        def get_embedding(text: str) -> np.ndarray:
             if not text or not isinstance(text, str):
                 raise ValueError("Input text must be a non-empty string.")
-            embedding = sbert_model.encode(text, convert_to_numpy=True, normalize_embeddings=True)
+            embedding = model.encode(text, convert_to_numpy=True, normalize_embeddings=True)
             return embedding  # returns a NumPy array
 
 
         # Get embeddings
-        keyword_embeddings = [get_sbert_embedding(kw) for kw in keywords]
+        keyword_embeddings = [get_embedding(kw) for kw in keywords]
         
         return keyword_embeddings
-        
 
     else:
-        logging.error(f"Something went wrong with method: {method}")
+        logging.error(f"No embeddings function available for: {platform}")
         return None
-
-

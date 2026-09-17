@@ -1,0 +1,2 @@
+DOI,Platform,Number of metadata characters,Number of matched terms,Matching method,Cosine similarity threshold,Embedding model,Instruct model,Runtime (seconds)
+doi:10.17026/dans-xfp-njp9,huggingface,293,2,closest,0.8,multi-qa-MiniLM-L6-cos-v1,Qwen/Qwen3-8B:nscale,25.080918457002554
