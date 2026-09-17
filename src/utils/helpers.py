@@ -1,16 +1,11 @@
-# Load a pretrained 300‑dim English model (≈1 GB)
-#import fasttext
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-import fasttext as ft
 import rdflib
 
 
 
 ### Embedding related functions
 
-def get_fasttext_vec(word: str):
-    return ft.get_word_vector(word)   # returns a NumPy array (300,)
 
 def print_similar_keywords(sim_matrix, keywords):
     """ 
@@ -26,20 +21,8 @@ def print_similar_keywords(sim_matrix, keywords):
         print(f"Keyword '{keywords[i]}' is most similar to '{keywords[most_similar_idx]}' with similarity {similarities[most_similar_idx]:.4f}")
 
 
-def print_vector_shapes(keywords):
-    for keyword in keywords:
-        vec = get_fasttext_vec(keyword)
-        print(f"Keyword: {keyword} | Vector shape: {vec.shape}")
 
-
-def calculate_similarity_matrix(keywords):
-    vectors = np.stack([get_fasttext_vec(w) for w in keywords])
-    sim_matrix = cosine_similarity(vectors)
-    print(sim_matrix)
-    print()
-
-
-def return_top_n_terms(config, keyword_embeddings, term_embeddings, terms, n=5):
+def return_top_n_terms(config, keyword_embeddings, term_embeddings, terms, n=3):
     """
     Use matching_method = "top_n" to return the top n terms for each keyword embedding
     based on cosine similarity above a certain threshold.
@@ -63,7 +46,7 @@ def return_top_n_terms(config, keyword_embeddings, term_embeddings, terms, n=5):
 
     # find the closest term for each keyword embedding. return them and their cosine similarity scores
     for kw_emb in keyword_embeddings:
-        kw_emb = kw_emb.reshape(1, -1)  # reshape to (1, embedding_dim)
+        kw_emb = np.array(kw_emb).reshape(1, -1)  # reshape to (1, embedding_dim)
         similarities = cosine_similarity(kw_emb, term_embeddings)  # shape (1, num_terms)
         top_indices = np.argsort(-similarities[0])[:n]  # indices of top 5 similar terms
         top_terms = [terms[i] for i in top_indices if similarities[0][i] >= cosine_threshold]
@@ -109,7 +92,7 @@ def return_closest_term(keyword_embedding, term_embeddings, terms):
 
     # find the closest term for each keyword embedding. return them and their cosine similarity scores
     for kw_emb in keyword_embedding:
-        kw_emb = kw_emb.reshape(1, -1)  # reshape to (1, embedding_dim)
+        kw_emb = np.array(kw_emb).reshape(1, -1)  # reshape to (1, embedding_dim)
         similarities = cosine_similarity(kw_emb, term_embeddings)  # shape (1, num_terms)
         top_index = np.argmax(similarities[0])  # index of the most similar term
         top_term = terms[top_index]
@@ -140,16 +123,3 @@ def return_closest_term(keyword_embedding, term_embeddings, terms):
         
     return matched_terms_with_uris, cosines
 
-    
-def get_stats():
-    """
-    Get statistics about the keyword matching request in a .csv file. 
-    It contains the following info: 
-    - dataset DOI 
-    - runtime 
-    - cosine threshold 
-    - embeddings model 
-    - LLM 
-
-    """ 
-    pass

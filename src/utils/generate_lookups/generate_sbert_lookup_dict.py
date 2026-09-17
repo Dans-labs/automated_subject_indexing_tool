@@ -1,5 +1,6 @@
 """
 This script represents the controlled vocabulary terms as embeddings and saves them to a lookup dictionary.
+The Sentence-BERT model is used. 
 
 Input: a ttl file with controlled vocabulary terms
 Output: a lookup dictionary with terms as keys and embeddings as values, saved as a .pkl file

@@ -1,12 +1,7 @@
 # Data
-data/aatc.ttl
-aatc_fasttext_lookup.pkl
-aatc_sbert_lookup.pkl
-dois_for_asi_test1.txt
-data/
+data/lookup_dicts
+aatc.ttl
 
-# Models 
-models/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -30,3 +25,12 @@ ipython_config.py
 
 # VSCode
 .vscode
+
+# pycache
+__pycache__/
+
+# configs
+configs/demo_huggingface.yaml
+configs/demo_ai4eosc.yaml
+configs/huggingface.yaml
+configs/ai4eosc.yaml

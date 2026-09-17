@@ -2,7 +2,7 @@
 This script matches the embeddings of generated keywords to the closest controlled vocabulary terms using cosine similarity.
 
 Input: list of keyword embeddings and lookup dictionary with controlled vocabulary terms as embeddings
-Output: matched terms for each keyword based on highest similarity as a txt file
+Output: matched terms for each keyword based on highest similarity as a .txt file
 
 """
 
@@ -17,12 +17,12 @@ from src.utils.helpers import return_closest_term, return_top_n_terms
 def run(config, keyword_embeddings):
 
     # options: "closest" or "top_n"
-    matching_method = config["match_keywords_to_terms"]["matching_method"]
+    matching_method = config["entity_matching"]["matching_method"]
 
 
-    # Load lookup dict (change path in default.yaml as needed)
+    # Load lookup dict (change path in config.yaml as needed)
     logging.info("Loading lookup dictionary...")
-    lookup_dict_path = config["embeddings"]["lookup_dict_path"]
+    lookup_dict_path = config["model"]["lookup_dict_path"]
     lookup_dict = pickle.load(open(lookup_dict_path, "rb"))  # {term: embedding}
 
     terms = list(lookup_dict.keys())
