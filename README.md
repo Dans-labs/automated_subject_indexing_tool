@@ -19,25 +19,31 @@ The task consist of two main components:
 - Summarizing the content of the dataset with keywords 
 - Entity linking: linking the generated keywords to controlled vocabulary terms with resolvable URIs. 
 
-<!-- TO DO: Add method visualization here -->
+
+
+![System setup](docs/imgs/asi_overview_transparent.svg)
+> *Figure 1: Overview of the ASI Tool.*
+
 
 The controlled vocabulary that is currently used is a [flat representation](https://github.com/DANS-KNAW/Getty-AAT-Concepts/tree/main) of the Getty Art & Architecture Thesaurus (AAT). 
 
 The tool uses the following technologies: 
 - an LLM for the generation of keywords
-- Contextualized embeddings (SentenceBERT) to represent both the generated keywords and the vocabulary terms
+- Contextualized embeddings to represent both the generated keywords and the vocabulary terms
 
 LLMs are useful approach for summarizing the contents of a dataset in keywords, but appear unsuitable for the task of linking those keywords to controlled vocabulary terms. For the entity linking part, a solution based on embedding representations is implemented. [Embedddings](https://en.wikipedia.org/wiki/Word_embedding) are machine-readable vector representations of text that encode semantic information. Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their closest neighbor in the controlled vocabulary. 
 
 ## Installation and Setup
 1. Make sure you have Python installed. 
-2. Clone this repository: `git clone git@github.com:Dans-labs/shhoc-nl-asi.git`
-3. Navigate into the project directory: `cd repo`
-4. Install the dependencies: `pip install -r requirements.txt`. This may take several minutes. 
-5. Retrieve a User Access Token with at least Inference permissions from [huggingface](https://huggingface.co/settings/tokens)
-2. Add the token to your environment by running `export MY_API_KEY="your-key-here"` in your terminal. 
-3. Download the flat representation of AAT concepts [here](https://github.com/DANS-KNAW/Getty-AAT-Concepts/blob/main/aatc.ttl) (keep the name `aatc.ttl`), place it in the `data` folder. 
-4. Run `generate_sbert_lookup_dict.py` to create a lookup dictionary of AATC terms as embeddings. It should be in the `data` folder. This only has to be done once. 
+2. Clone this repository: `git clone git@github.com:Dans-labs/automated_subject_indexing_tool.git`
+3. Install the dependencies: `pip install -r requirements.txt`, preferably in a virtual environment like [uv](https://docs.astral.sh/uv/pip/environments/). This may take several minutes.  
+4. Retrieve an API token for access to the models. The tool can deal with two access platforms:
+   - Huggingface: Get a User Access Token with at least Inference permissions from [huggingface](https://huggingface.co/settings/tokens)
+   - AI4EOSC: Get an LLM API Key. 
+5. Add the token the `config.yaml`, or to your environment by running `export MY_API_KEY="your-key-here"` in your terminal. 
+6. Download the flat representation of AAT concepts [here](https://github.com/DANS-KNAW/Getty-AAT-Concepts/blob/main/aatc.ttl) (keep the name `aatc.ttl`), place it in the `data` folder. 
+7. Generate a lookup dictionary by running 
+8. Run `generate_sbert_lookup_dict.py` to create a lookup dictionary of AATC terms as embeddings. It should be in the `data` folder. This only has to be done once. 
 
 
 
