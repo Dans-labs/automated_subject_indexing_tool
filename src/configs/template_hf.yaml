@@ -1,4 +1,4 @@
-# configs/demo_ai4eosc.yaml
+# configs/demo_huggingface.yaml
 
 
 input: 
@@ -8,12 +8,12 @@ extract_metadata:
   base_url: https://ssh.datastations.nl/api/datasets/export?exporter=OAI_ORE&persistentId=
 
 model: 
-  platform: "ai4eosc" # options: "ai4eosc" or "huggingface"
-  api_key: "" 
-  api_url: https://vllm.cloud.ai4eosc.eu 
-  instruct_model: "AI4EOSC/mistralai/Mistral-Small-3.1-24B-Instruct-2503"
-  embeddings_model: "AI4EOSC/Qwen/Qwen3-Embedding-4B"
-  lookup_dict_path: "data/lookup_dicts/aatc_qwen_lookup.pkl" # make sure this is generated with the embeddings model specified above
+  platform: "huggingface" # options: "ai4eosc" or "huggingface"
+  api_key:  "MY_API_KEY"
+  api_url: https://router.huggingface.co/v1/chat/completions
+  instruct_model: "Qwen/Qwen3-8B:nscale"
+  embeddings_model: "multi-qa-MiniLM-L6-cos-v1" 
+  lookup_dict_path: "data/lookup_dicts/aatc_sbert_lookup.pkl" # make sure this is generated with the embeddings model specified above
 
 prompts: 
   generate_keywords: |
@@ -27,11 +27,7 @@ entity_matching:
   matching_method: closest # options: "closest" or "top_n"
   
 
-
 output: 
-  base_path_run_info: "data/output/run_info_{platform}_{doi}.csv"
-  base_path_keywords_aggregated: "data/output/keywords_{platform}_{cosine_threshold}.csv"
+  base_path_run_info: "data/output/demo/run_info_{platform}_{doi}.csv"
+  base_path_keywords_aggregated: "data/output/demo/keywords_{platform}_{cosine_threshold}.csv"
   output_mode: compact # options: "experimental" and "compact"
-
-
-

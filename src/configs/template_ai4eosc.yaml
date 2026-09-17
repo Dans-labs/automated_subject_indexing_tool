@@ -1,0 +1,37 @@
+# configs/demo_ai4eosc.yaml
+
+
+input: 
+  doi: "10.17026/dans-xfp-njp9" # example DOI, can be replaced with any other DOI
+
+extract_metadata:
+  base_url: https://ssh.datastations.nl/api/datasets/export?exporter=OAI_ORE&persistentId=
+
+model: 
+  platform: "ai4eosc" # options: "ai4eosc" or "huggingface"
+  api_key: "MY_API_KEY" 
+  api_url: https://vllm.cloud.ai4eosc.eu 
+  instruct_model: "AI4EOSC/mistralai/Mistral-Small-3.1-24B-Instruct-2503"
+  embeddings_model: "AI4EOSC/Qwen/Qwen3-Embedding-4B"
+  lookup_dict_path: "data/lookup_dicts/aatc_qwen_lookup.pkl" # make sure this is generated with the embeddings model specified above
+
+prompts: 
+  generate_keywords: |
+    # Instruction: Choose up to 7 terms from the Getty AAT (https://vocab.getty.edu/aat/) that MOST HEAVILY summarize the dataset description provided with lexical priority given to the first sentence. Only use terms available in the Getty AAT. 
+    # Format: List the terms as 'term1, term2, term3,...' with NO OTHER COMMENTS. 
+    # Dataset description: {metadata}
+
+
+entity_matching:
+  cosine_threshold: 0.8
+  matching_method: closest # options: "closest" or "top_n"
+  
+
+
+output: 
+  base_path_run_info: "data/output/run_info_{platform}_{doi}.csv"
+  base_path_keywords_aggregated: "data/output/keywords_{platform}_{cosine_threshold}.csv"
+  output_mode: compact # options: "experimental" and "compact"
+
+
+
