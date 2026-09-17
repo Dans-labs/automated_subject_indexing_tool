@@ -1,5 +1,7 @@
 # Data
-data/lookup_dicts
+data/lookup_dicts/aatc_lookup_scopenotes.pkl
+data/lookup_dicts/aatc_qwen_lookup.pkl
+data/lookup_dicts/aatc_sbert_lookup.pkl
 aatc.ttl
 
 
