@@ -42,8 +42,7 @@ LLMs are useful approach for summarizing the contents of a dataset in keywords, 
    - AI4EOSC: Get an LLM API Key. 
 5. Add the token the `config.yaml`, or to your environment by running `export MY_API_KEY="your-key-here"` in your terminal. 
 6. Download the flat representation of AAT concepts [here](https://github.com/DANS-KNAW/Getty-AAT-Concepts/blob/main/aatc.ttl) (keep the name `aatc.ttl`), place it in the `data` folder. 
-7. Generate a lookup dictionary by running 
-8. Run `generate_sbert_lookup_dict.py` to create a lookup dictionary of AATC terms as embeddings. It should be in the `data` folder. This only has to be done once. 
+7. Run `generate_sbert_lookup_dict.py` to create a lookup dictionary of AATC terms as embeddings. It should be in the `data` folder. This only has to be done once. 
 
 
 
