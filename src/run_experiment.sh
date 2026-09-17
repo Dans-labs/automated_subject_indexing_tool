@@ -8,7 +8,8 @@
 # ------------------------------------------------------------
 
 # Path to the file that holds the DOIs
-DOI_FILE="data/dois_for_asi_test1.txt"
+DOI_FILE="data/demo/demo_dois.txt"
+
 
 # Make sure the file exists before we start
 if [[ ! -f "$DOI_FILE" ]]; then
@@ -22,11 +23,14 @@ let COUNT=0
 # Iterate over each line (each DOI) in the file.
 # Using `while IFS= read -r` preserves whitespace and avoids word‑splitting.
 while IFS= read -r DOI; do
-    # Skip empty lines (optional, but handy)
+    # Skip empty lines
 
     [[ -z "$DOI" ]] && continue
 
     let COUNT++
+    echo ""
+    echo ""
+    echo "------------------------------------------------------------"
     echo "Processing item #$COUNT"
 
     echo "Processing DOI: $DOI"
@@ -37,7 +41,7 @@ while IFS= read -r DOI; do
     # Run the Python module. Adjust the import path if necessary.
     python3 -m src.pipeline --doi "$DOI"
 
-    # Check the exit status of the Python command – useful for debugging.
+    # Check the exit status of the Python command
     if [[ $? -ne 0 ]]; then
         echo "Warning: Python script failed for DOI $DOI" >&2
     else

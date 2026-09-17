@@ -13,7 +13,7 @@ import requests
 
 def run(config, metadata):
 
-    logging.info("Generating keywords using LLM...")
+    logging.info("> Generating keywords using LLM...")
 
     import os
 
@@ -52,6 +52,7 @@ def run(config, metadata):
         ],
         "model": f"{model}"
     })
+
 
     llm_response = response["choices"][0]["message"]["content"]
     # lower case the response

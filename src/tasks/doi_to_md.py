@@ -14,7 +14,7 @@ import logging
 
 def run(config, doi): 
 
-    logging.info("Fetching metadata from DOI...")
+    logging.info("> Fetching metadata from DOI...")
 
     #doi = config['doi_to_md']['doi']
     base_url = config["doi_to_md"]["base_url"]
@@ -23,11 +23,11 @@ def run(config, doi):
 
     # Format DOI for URL
     doi_encoded = doi.replace(":", "%3A")
-    logging.info(f"Encoded DOI: {doi_encoded}")
+    #logging.info(f"Encoded DOI: {doi_encoded}")
     metadata_url = f"{base_url}{doi_encoded}"
-    logging.info(f"Metadata URL: {metadata_url}")
+    #logging.info(f"Metadata URL: {metadata_url}")
 
-    logging.info("Requesting metadata from API...")
+    #logging.info("Requesting metadata from API...")
 
     # Get metadata from API
     try:  
@@ -94,7 +94,5 @@ def run(config, doi):
     # else:
     #     metadata_output = f"{title} {description}"
 
-    logging.info("Metadata fetched successfully.")
+    logging.info("> Metadata fetched successfully.")
     return metadata_output
-
-

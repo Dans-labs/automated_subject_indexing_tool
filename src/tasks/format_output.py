@@ -43,6 +43,9 @@ def run(config, keywords, matched_terms, cosines, metadata_length, metadata_outp
                     "Cosine Similarity": float(cosine),   
                 })
 
+                print("========================================")
+                print(f"{keyword} | {term} | {uri} | {cosine}")
+
 
     if matching_method == "top_n":        
         for i, keyword in enumerate(keywords):
@@ -57,9 +60,13 @@ def run(config, keywords, matched_terms, cosines, metadata_length, metadata_outp
                         "Cosine Similarity": float(cosine), 
                     })
 
+                    
+    print("========================================")
 
     # Create a DataFrame from the collected data
     aggregated_df = pd.DataFrame(aggregated_data)
+
+
 
     # Check if the output file already exists
     base_path_agg = config["format_output"]["base_path_keywords_aggregated"]

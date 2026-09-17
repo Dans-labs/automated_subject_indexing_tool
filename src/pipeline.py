@@ -10,7 +10,7 @@ start = time.perf_counter()
 
 
 #from .tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms
-from tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
+from src.tasks import doi_to_md, generate_keywords, keywords_to_embeddings, match_keywords_to_terms, format_output
 # Configure logging 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -29,7 +29,7 @@ def main():
     parser.add_argument(
         "--config", 
         type=str, 
-        default="src/configs/default.yaml", 
+        default="src/configs/demo.yaml", 
         help="Path to the configuration YAML file."
     )
     parser.add_argument(
@@ -43,7 +43,7 @@ def main():
 
     # Load config 
     config = load_config(args.config)
-    logging.info(f"Loaded configuration from {args.config}")
+    #logging.info(f"Loaded configuration from {args.config}")
 
     if args.doi:
         doi = args.doi
@@ -53,12 +53,12 @@ def main():
 
 
     # Run tasks 
-    logging.info("Starting pipeline...")
+    logging.info("> Starting pipeline...")
 
     # Task 1: DOI to Metadata
     metadata_output = doi_to_md.run(config, doi)
     if metadata_output:
-        print("\n=== METADATA OUTPUT ===")
+        print("\n=== METADATA ===")
         print(metadata_output)
         print("=======================\n")
 
@@ -71,7 +71,7 @@ def main():
     if metadata_output:
         keywords = generate_keywords.run(config, metadata_output)
         if keywords:
-            logging.info(f"Keywords successfully generated!")
+            logging.info(f"> Keywords successfully generated!")
             print("\n=== GENERATED KEYWORDS ===")
             print(keywords)
             print("==========================\n")
@@ -84,7 +84,7 @@ def main():
     if keywords:
         keyword_embeddings = keywords_to_embeddings.run(config, keywords)
         if keyword_embeddings:
-            logging.info(f"Keyword embeddings successfully generated!")
+            logging.info(f"> Keyword embeddings successfully generated!")
             print("\n=== KEYWORD EMBEDDINGS ===")
             for i, emb in enumerate(keyword_embeddings):
                 print(f"Keyword: {keywords[i]} | Embedding shape: {emb.shape}")
@@ -97,7 +97,7 @@ def main():
     # Task 4: Match keywords to terms
 
     if keyword_embeddings:
-        logging.info("Matching keywords to controlled vocabulary terms...")
+        logging.info("> Matching keywords to controlled vocabulary terms...")
         closest_matches, cosines = match_keywords_to_terms.run(config, keyword_embeddings)
 
     elapsed = time.perf_counter() - start
@@ -113,8 +113,8 @@ def main():
 
 
 
-    logging.info("Pipeline completed.")
-    logging.info("===================================")
+    logging.info("> Pipeline completed.")
+    #logging.info("===================================")
     print("\n")
 
 
