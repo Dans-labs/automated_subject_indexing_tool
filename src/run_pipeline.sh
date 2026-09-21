@@ -16,17 +16,6 @@ DOI_FILE="data/input/demo/demo_dois.txt"
 # Path to the config file
 CONFIG_FILE="src/configs/demo_huggingface.yaml"
 
-# # Make sure the doi + config files exists 
-# if [[ ! -f "$DOI_FILE" ]]; then
-#     echo "Error: DOI list file not found at '$DOI_FILE'" 
-#     exit 1
-# fi
-
-# if [[ ! -f "$CONFIG_FILE" ]]; then
-#     echo "Error: Config file not found at '$CONFIG_FILE'"
-#     exit 1
-# fi
-
 
 let COUNT=0
 
