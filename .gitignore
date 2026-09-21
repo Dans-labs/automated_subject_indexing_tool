@@ -6,7 +6,7 @@ aatc.ttl
 
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__
 *.py[codz]
 *$py.class
 
@@ -40,3 +40,6 @@ src/configs/ai4eosc.yaml
 # Lookups 
 src/utils/generate_lookups/generate_qwen_lookup_dict_with_scope_notes.py
 
+# Misc
+src/utils/censorship_eval.ipynb
+src/utils/evaluation.ipynb
