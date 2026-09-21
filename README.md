@@ -12,6 +12,7 @@ Current status: prototype, in active development. Documentation needs to be upda
   - [Configuration](#configuration)
   - [File Strcture](#file-strcture)
   - [License](#license)
+  - [AI statement](#ai-statement)
 
 
 ## Method
@@ -64,3 +65,6 @@ You can customize the following settings in `src/configs/default.yaml`:
 
 ## License 
 <!-- TO DO: add license info here-->
+
+## AI statement 
+

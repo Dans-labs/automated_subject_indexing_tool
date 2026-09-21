@@ -38,5 +38,5 @@ src/configs/huggingface.yaml
 src/configs/ai4eosc.yaml
 
 # Lookups 
-src/utils/generate_lookups/
+src/utils/generate_lookups/generate_qwen_lookup_dict_with_scope_notes.py
 
