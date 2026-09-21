@@ -17,8 +17,8 @@ Current status: prototype, in active development.
 
 ## Method
 The task consist of two main components: 
-- Summarizing the content of the dataset with keywords 
-- Entity linking: linking the generated keywords to controlled vocabulary terms with resolvable URIs
+- Summarizing the content of the dataset with keywords.
+- Entity linking: linking the generated keywords to controlled vocabulary terms with resolvable URIs.
 
 
 
@@ -29,8 +29,8 @@ The task consist of two main components:
 The controlled vocabulary that is currently used is a [flat representation](https://github.com/DANS-KNAW/Getty-AAT-Concepts/tree/main) of the Getty Art & Architecture Thesaurus (AAT). 
 
 The tool uses the following technologies: 
-- An LLM (currently Mistral-Small-3.1) for the generation of keywords 
-- Contextualized embeddings to represent both the generated keywords and the vocabulary terms
+- An LLM (currently Mistral-Small-3.1) for the generation of keywords.
+- Contextualized embeddings to represent both the generated keywords and the vocabulary terms, allowing for entity linking. 
 
 LLMs are a useful approach for summarizing the contents of a dataset in keywords, but appear unsuitable for the task of linking those keywords to controlled vocabulary terms. For the entity linking part, a solution based on embedding representations is implemented. [Embeddings](https://en.wikipedia.org/wiki/Word_embedding) are machine-readable vector representations of text that encode semantic information. Representing both the controlled vocabulary terms and the generated keywords as embeddings allows for the use of cosine similarity to match the keywords with their closest neighbor in the controlled vocabulary. 
 
